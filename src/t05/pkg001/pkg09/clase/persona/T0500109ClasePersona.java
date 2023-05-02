@@ -1,85 +1,80 @@
 package t05.pkg001.pkg09.clase.persona;
 
-import java.time.DateTimeException;
-import java.time.LocalDate;
+import java.util.Scanner;
 
 public class T0500109ClasePersona {
 
     public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String nombre = "";
+        String apellidos = "";
+        String fecha = "";
+        String fechaNacimiento = "";
+        int formatoEntero = 0;
+        int formatoSinFecha = 0;
+        boolean fechaCorrecta ;
+        String fechaNueva = "";
 
-    }
+        Persona miPersona1 = null;
+        formatoEntero = sc.nextInt();
+        formatoSinFecha = sc.nextInt();
+        sc.nextLine();
 
-}
+        for (int i = 0; i < formatoEntero; i++) {
+            nombre = sc.nextLine();
+            apellidos = sc.nextLine();
+            fecha = sc.nextLine();
 
-class Persona {
-
-    private String nombre;
-    private String apellidos;
-    private LocalDate fechaNacimiento;
-
-    public Persona(String nombre, String apellidos) {
-        if ("".equals(nombre) || "".equals(apellidos)) {
-            throw new IllegalArgumentException();
-        } else {
-            this.nombre = nombre;
-            this.apellidos = apellidos;
-        }
-
-    }
-
-    public Persona(String nombre, String apellidos, String fechaNacimiento) throws IllegalArgumentException {
-        if ("".equals(nombre) || "".equals(apellidos) || "".equals(fechaNacimiento)) {
-            throw new IllegalArgumentException();
-        } else {
-            this.nombre = nombre;
-            this.apellidos = apellidos;
-            this.fechaNacimiento = generarFecha(fechaNacimiento);
-        }
-
-    }
-
-    private LocalDate generarFecha(String fecha) {
-        int dia = 0;
-        int mes = 0;
-        int anio = 0;
-
-        if (!fecha.matches("[0-9](2)[-][0-9](2)[-][0-9](4)")
-                && !fecha.matches("[0-9](2)[/][0-9](2)[/][0-9](4)")) {
-        } else {
             try {
-                dia = Integer.parseInt(fecha.substring(0, 2));
-                mes = Integer.parseInt(fecha.substring(3, 5));
-                anio = Integer.parseInt(fecha.substring(6, fecha.length()));
+                miPersona1 = new Persona(nombre, apellidos, fecha);
+                fechaNacimiento = miPersona1.getFechaNacimiento();
+                System.out.println("Procesado: " + miPersona1.getNombre() + " "
+                        + miPersona1.getApellidos()
+                        + ", nacido el " + fechaNacimiento.substring(0, 2) + " del "
+                        + fechaNacimiento.substring(3, 5) + " de " + fechaNacimiento.substring(6, fechaNacimiento.length()));
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR. Procesando siguiente persona");
+            }
 
-                return LocalDate.of(anio, mes, dia);
+        }
 
-            } catch (NumberFormatException | DateTimeException ex1) {
-                throw new IllegalArgumentException();
+        for (int i = 1; i <= formatoSinFecha; i++) {
+            nombre = sc.nextLine();
+            apellidos = sc.nextLine();
+
+            try {
+                miPersona1 = new Persona(nombre, apellidos);
+                fecha = miPersona1.getFechaNacimiento();
+                System.out.println("Procesado: " + miPersona1.getNombre() + " "
+                        + miPersona1.getApellidos()
+                        + ", nacido el " + fecha);
+
+                if (i == formatoSinFecha) {
+                    fechaNueva = sc.nextLine();
+                    fechaCorrecta = false;
+                    while (!fechaCorrecta) {
+
+                        try {
+                            miPersona1.setFechaNacimiento(fechaNueva);
+                            fechaNacimiento = miPersona1.getFechaNacimiento();
+                            fechaCorrecta = true;
+                            System.out.println("Procesado: " + miPersona1.getNombre() + " "
+                                    + miPersona1.getApellidos()
+                                    + ", nacido el " + fechaNacimiento.substring(0, 2) + " del "
+                                    + fechaNacimiento.substring(3, 5) + " de " + fechaNacimiento.substring(6, fechaNacimiento.length()));
+
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Fecha Incorrecta");
+                            fechaNueva = sc.nextLine();
+                        }
+                    }
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("ERROR. Procesando siguiente persona");
             }
         }
 
     }
-
-    private String getFechaNacimiento(char separador) throws IllegalArgumentException {
-        String fecha = null;
-
-        if (separador != '-' || separador != '/') {
-            throw new IllegalArgumentException();
-        } else {
-            if (this.fechaNacimiento != null) {
-                fecha = String.format("%02d%02d%04d%", this.fechaNacimiento.getDayOfMonth(), separador, this.fechaNacimiento.getDayOfMonth(),
-                        separador, this.fechaNacimiento.getYear());
-            }
-            return fecha;
-        }
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellidos() {
-        return apellidos;
-    }
-
 }
+
+
