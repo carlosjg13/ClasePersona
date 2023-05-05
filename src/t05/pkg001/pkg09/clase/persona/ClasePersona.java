@@ -105,7 +105,7 @@ class Persona {
         this.fechaNacimiento = generarFecha(fechaNacimiento);
     }
 
-    public String Ejercicio3() {
+    public String Ejercicio4() {
         return apellidos;
     }
 }
