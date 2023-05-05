@@ -3,7 +3,6 @@ package t05.pkg001.pkg09.clase.persona;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-
 class Persona {
 
     private String nombre;
@@ -67,6 +66,29 @@ class Persona {
         }
     }
 
+    public int getEdadEnFecha(String cadenaFecha) {
+        LocalDate fecha = generarFecha(cadenaFecha);
+        int edad = fecha.getYear() - fechaNacimiento.getYear();
+        int dia = fecha.getDayOfMonth();
+        int mes = fecha.getMonthValue();
+        int diaNacimiento = fechaNacimiento.getDayOfMonth();
+        int mesNacimiento = fechaNacimiento.getMonthValue();
+        
+        if (fecha.isBefore(fechaNacimiento)) {
+            throw new IllegalArgumentException();
+        }
+        if (edad < 0) {
+            edad = -1;
+        }
+        if (edad == 0) {
+
+        } else if (dia < diaNacimiento && mes < mesNacimiento) {
+            edad--;
+        }
+
+        return edad;
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -76,7 +98,7 @@ class Persona {
     }
 
     public String getFechaNacimiento() {
-        return getFechaNacimiento('-');
+        return getFechaNacimiento('/');
     }
 
     public void setFechaNacimiento(String fechaNacimiento) throws IllegalArgumentException {

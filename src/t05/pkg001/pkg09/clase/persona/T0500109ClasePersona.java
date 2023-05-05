@@ -10,71 +10,46 @@ public class T0500109ClasePersona {
         String apellidos = "";
         String fecha = "";
         String fechaNacimiento = "";
-        int formatoEntero = 0;
-        int formatoSinFecha = 0;
-        boolean fechaCorrecta ;
-        String fechaNueva = "";
+        int numFechas = 0;
+        int numPersonas = 0;
 
         Persona miPersona1 = null;
-        formatoEntero = sc.nextInt();
-        formatoSinFecha = sc.nextInt();
+        numPersonas = sc.nextInt();
         sc.nextLine();
 
-        for (int i = 0; i < formatoEntero; i++) {
+        for (int i = 0; i < numPersonas; i++) {
             nombre = sc.nextLine();
             apellidos = sc.nextLine();
-            fecha = sc.nextLine();
+            fechaNacimiento = sc.nextLine();
+            numFechas = sc.nextInt();
+            sc.nextLine();
+            for (int j = 0; j < numFechas; j++) {
 
-            try {
-                miPersona1 = new Persona(nombre, apellidos, fecha);
-                fechaNacimiento = miPersona1.getFechaNacimiento();
-                System.out.println("Procesado: " + miPersona1.getNombre() + " "
-                        + miPersona1.getApellidos()
-                        + ", nacido el " + fechaNacimiento.substring(0, 2) + " del "
-                        + fechaNacimiento.substring(3, 5) + " de " + fechaNacimiento.substring(6, fechaNacimiento.length()));
-            } catch (IllegalArgumentException e) {
-                System.out.println("ERROR. Procesando siguiente persona");
-            }
+                fecha = sc.nextLine();
 
-        }
-
-        for (int i = 1; i <= formatoSinFecha; i++) {
-            nombre = sc.nextLine();
-            apellidos = sc.nextLine();
-
-            try {
-                miPersona1 = new Persona(nombre, apellidos);
-                fecha = miPersona1.getFechaNacimiento();
-                System.out.println("Procesado: " + miPersona1.getNombre() + " "
-                        + miPersona1.getApellidos()
-                        + ", nacido el " + fecha);
-
-                if (i == formatoSinFecha) {
-                    fechaNueva = sc.nextLine();
-                    fechaCorrecta = false;
-                    while (!fechaCorrecta) {
-
-                        try {
-                            miPersona1.setFechaNacimiento(fechaNueva);
-                            fechaNacimiento = miPersona1.getFechaNacimiento();
-                            fechaCorrecta = true;
-                            System.out.println("Procesado: " + miPersona1.getNombre() + " "
+                try {
+                    miPersona1 = new Persona(nombre, apellidos, fechaNacimiento);
+                    fechaNacimiento = miPersona1.getFechaNacimiento();
+                    try {
+                        if (miPersona1.getEdadEnFecha(fecha) != -1) {
+                            System.out.println(miPersona1.getNombre() + " " + miPersona1.getApellidos() + " tendra "
+                                    + miPersona1.getEdadEnFecha(fecha) + " anyos en fecha " + fecha);
+                        } else {
+                            System.out.println(miPersona1.getNombre() + " "
                                     + miPersona1.getApellidos()
-                                    + ", nacido el " + fechaNacimiento.substring(0, 2) + " del "
-                                    + fechaNacimiento.substring(3, 5) + " de " + fechaNacimiento.substring(6, fechaNacimiento.length()));
-
-                        } catch (IllegalArgumentException e) {
-                            System.out.println("Fecha Incorrecta");
-                            fechaNueva = sc.nextLine();
+                                    + " aun no ha nacido a fecha " + fecha);
                         }
+
+                    } catch (IllegalArgumentException ex1) {
+                        System.out.println("ERROR. Procesando siguiente fecha");
                     }
+
+                } catch (IllegalArgumentException ex2) {
+                    System.out.println("ERROR. Procesando siguiente persona");
                 }
-            } catch (IllegalArgumentException e) {
-                System.out.println("ERROR. Procesando siguiente persona");
             }
+
         }
 
     }
 }
-
-
