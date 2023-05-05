@@ -73,7 +73,7 @@ class Persona {
         int mes = fecha.getMonthValue();
         int diaNacimiento = fechaNacimiento.getDayOfMonth();
         int mesNacimiento = fechaNacimiento.getMonthValue();
-        
+
         if (fecha.isBefore(fechaNacimiento)) {
             throw new IllegalArgumentException();
         }
@@ -103,5 +103,9 @@ class Persona {
 
     public void setFechaNacimiento(String fechaNacimiento) throws IllegalArgumentException {
         this.fechaNacimiento = generarFecha(fechaNacimiento);
+    }
+
+    public String Ejercicio3() {
+        return apellidos;
     }
 }
