@@ -47,7 +47,7 @@ public class T0500109ClasePersona {
                 } catch (IllegalArgumentException ex2) {
                     System.out.println("ERROR. Procesando siguiente persona");
                 }
-                System.out.println("Ejercicio 4");
+                System.out.println("Ejercicio 5");
             }
 
         }
